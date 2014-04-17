@@ -14,7 +14,9 @@
                                 {% if document.url is not null %}
                                     <a target="_blank" href="{{ document.url }}">{{ document.url | length > 40 ? document.url | slice(0, 40) ~ '...' :document.url }}</a>
                                 {% else %}
-                                    <a target="_blank" href="{{ path('icap_dropzone_open_resource', {'resourceId': dropzone.id, 'documentId': document.id}) }}">{{document.resourceNode.name}}</a>
+                                    <a class="resource-link {{ document.type}}" data-target="{{ path('icap_dropzone_open_resource', {'resourceId': dropzone.id, 'documentId': document.id}) }}">
+                                    {{document.resourceNode.name}}
+                                    </a>
                                 {% endif %}
                             </td>
                             {% if mode == 'complete' %}
@@ -31,4 +33,31 @@
             </table>
         </div>
     </div>
+
+
+    <style>
+    #modal-dialog-resource {
+        width: 90%;
+        height:200px;
+    }
+
+    #resource-iframe {
+        border:none;
+    }
+    </style>
+
+    <div class="modal fade" id="resource-modal" >
+        <div id="modal-dialog-resource" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <iframe width="100%" id="resource-iframe" src=""></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <script type="text/javascript" src="{{ asset('bundles/icapdropzone/js/drop.js') }}"></script>
 {% endmacro %}
